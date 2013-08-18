@@ -120,10 +120,6 @@ public hnsxp_spawn(id)
 		set_user_health(id, get_user_health(id) + 5*hnsxp_playerlevel[id]);
 	if(hnsxp_playerlevel[id] >= 50)
 		set_user_gravity(id, 0.7);
- 		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 7)
-	        cs_set_user_bpammo( id, CSW_DEAGLE, 0 ) 
-
-
 
 }
 
@@ -135,6 +131,7 @@ public FwdPlayerSpawn(id)
         set_task(10.0, "gItem20", id);
         set_task(10.0, "gItem30", id);
         set_task(10.0, "gItem40", id);
+        set_task(10.0, "gItem50", id);
 
 
 }
@@ -155,7 +152,7 @@ public tlvl(id)
 public gItem(id)
 {
 
-	if(hnsxp_playerlevel[id] >= 10 && hnsxp_playerlevel[id] <= 20)
+	if(hnsxp_playerlevel[id] >= 10 && hnsxp_playerlevel[id] < 20)
 		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 1)
 	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
          give_item(id, "weapon_hegrenade");
@@ -164,7 +161,7 @@ public gItem(id)
 public gItem20(id)
 {
 
-	if(hnsxp_playerlevel[id] >= 20 && hnsxp_playerlevel[id] <= 30)
+	if(hnsxp_playerlevel[id] >= 20 && hnsxp_playerlevel[id] < 30)
 		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 2)
 	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
          give_item(id, "weapon_hegrenade");
@@ -189,7 +186,7 @@ public gItem30(id)
 public gItem40(id)
 {
 
-	if(hnsxp_playerlevel[id] >= 40 && hnsxp_playerlevel[id] <= 50)
+	if(hnsxp_playerlevel[id] >= 40 && hnsxp_playerlevel[id] < 50)
 		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 5)
 	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
          give_item(id, "weapon_hegrenade");
@@ -204,6 +201,27 @@ public gItem40(id)
          give_item(id, "weapon_flashbang");
          give_item(id, "weapon_flashbang");
          give_item(id, "weapon_flashbang");
+
+}
+public gItem50(id)
+{
+
+	if(hnsxp_playerlevel[id] = 50)
+		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 7)
+	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_smokegrenade");
+         give_item(id, "weapon_smokegrenade");
+
 
 }
 public hnsxp_death() 
