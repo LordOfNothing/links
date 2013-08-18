@@ -1,8 +1,8 @@
 /*==================================================
 
 Autor : KronoS
-Editor,Updater : LordOfNothing , BurningSkeleton
-Versiune :3.4
+Editor,Updater : LordOfNothing 
+Versiune : 3.5
 Connect HNS.LANEIX.COM
 ==================================================*/
 
@@ -15,59 +15,59 @@ Connect HNS.LANEIX.COM
 
 new const PLUGIN_NAME[] = "GameMode XP";
 
-new const hnsxp_version[] = "3.3";
+new const hnsxp_version[] = "3.6";
 
 new const LEVELS[50] = {
-    
-    1000,  // 1
-    2000,  // 2 
-    3000,  // 3
-    4000,  // 4
-    5000,  // 5
-    5500, // 6
-    6000, // 7
-    6500,  // 8
-    7000, // 10
-    7500, // 11
-    8000, // 12
-    9000, // 13
-    10000, // 14
-    12000, // 15
-    16000, // 16
-    18000, // 17
-    20000, // 18
-    22000, // 19
-    25000, // 20
-    28000, // 21
-    30000, // 22
-    32000, // 23
-    34000, // 24
-    35000, // 25
-    38000, // 26
-    40000, // 27
-    50000, // 28
-    60000, // 29
-    80000, // 30
-    85000, // 31
-    90000,  //32
-    93000, // 33
-    94000, // 34
-    97000, // 35
-    98000, // 36
-    100000, // 37
-    105000, // 38
-    108000, // 39
-    110000, // 40
-    115000, // 41
-    120000, // 42
-    125000, // 43
-    130000, // 44
-    140000, // 45
-    150000, // 46
-    160000, // 47
-    170000, // 48
-    180000, // 49
-    200000  // 50
+
+	1000,  // 1
+	2000,  // 2 
+	3000,  // 3
+	4000,  // 4
+	5000,  // 5
+	5500, // 6
+	6000, // 7
+	6500,  // 8
+	7000, // 10
+	7500, // 11
+	8000, // 12
+	9000, // 13
+	10000, // 14
+	12000, // 15
+	16000, // 16
+	18000, // 17
+	20000, // 18
+	22000, // 19
+	25000, // 20
+	28000, // 21
+	30000, // 22
+	32000, // 23
+	34000, // 24
+	35000, // 25
+	38000, // 26
+	40000, // 27
+	50000, // 28
+	60000, // 29
+	80000, // 30
+	85000, // 31
+	90000,  //32
+	93000, // 33
+	94000, // 34
+	97000, // 35
+	98000, // 36
+	100000, // 37
+	105000, // 38
+	108000, // 39
+	110000, // 40
+	115000, // 41
+	120000, // 42
+	125000, // 43
+	130000, // 44
+	140000, // 45
+	150000, // 46
+	160000, // 47
+	170000, // 48
+	180000, // 49
+	200000  // 50
 }
 
 new hnsxp_playerxp[33], hnsxp_playerlevel[33];
@@ -75,342 +75,371 @@ new hnsxp_kill, hnsxp_knife, hnsxp_grenade, hnsxp_hs, hnsxp_savexp, g_hnsxp_vaul
 
 public plugin_init()
 {
-    register_plugin(PLUGIN_NAME, hnsxp_version, "KronoS");
-    
-    RegisterHam(Ham_Spawn, "player", "hnsxp_spawn", 1);
-    register_event("DeathMsg", "hnsxp_death", "a");
-    
-    hnsxp_savexp = register_cvar("hnsxp_savexp","1");
-    hnsxp_kill = register_cvar("hnsxp_kill", "100");
-    hnsxp_knife = register_cvar("hnsxp_knife","100");
-    hnsxp_grenade = register_cvar("hnsxp_grenade","100");
-    hnsxp_hs = register_cvar("hnsxp_hs","100");
-    
-    register_clcmd("say /level","plvl");
-    register_clcmd("say /xp","plvl");
-    register_clcmd("say_team /level","plvl");
-    register_clcmd("say_team /xp","plvl");
-    register_clcmd("say /lvl","tlvl");
-    g_hnsxp_vault = nvault_open("deathrun_xp");
-   
-    register_event("SendAudio", "t_win", "a", "2&%!MRAD_terwin")  
-    
-    
-    register_concmd("amx_level", "cmd_give_level", ADMIN_IMMUNITY, "<target> <amount>"); 
-    register_concmd("amx_takelevel", "cmd_take_level", ADMIN_IMMUNITY, "<target> <amount>");  
-    
-    register_concmd("amx_xp", "cmd_give_xp", ADMIN_IMMUNITY, "<target> <amount>"); 
-    register_concmd("amx_takexp", "cmd_take_xp", ADMIN_IMMUNITY, "<target> <amount>");
-    
-    RegisterHam(Ham_Spawn, "player", "FwdPlayerSpawn", 1);
-    
+	register_plugin(PLUGIN_NAME, hnsxp_version, "KronoS");
+
+	RegisterHam(Ham_Spawn, "player", "hnsxp_spawn", 1);
+	register_event("DeathMsg", "hnsxp_death", "a");
+
+	hnsxp_savexp = register_cvar("hnsxp_savexp","1");
+	hnsxp_kill = register_cvar("hnsxp_kill", "100");
+	hnsxp_knife = register_cvar("hnsxp_knife","100");
+	hnsxp_grenade = register_cvar("hnsxp_grenade","100");
+	hnsxp_hs = register_cvar("hnsxp_hs","100");
+
+	register_clcmd("say /level","plvl");
+	register_clcmd("say /xp","plvl");
+	register_clcmd("say_team /level","plvl");
+	register_clcmd("say_team /xp","plvl");
+	register_clcmd("say /lvl","tlvl");
+	g_hnsxp_vault = nvault_open("deathrun_xp");
+
+
+	register_concmd("amx_level", "cmd_give_level", ADMIN_IMMUNITY, "<target> <amount>"); 
+	register_concmd("amx_takelevel", "cmd_take_level", ADMIN_IMMUNITY, "<target> <amount>");  
+
+	register_concmd("amx_xp", "cmd_give_xp", ADMIN_IMMUNITY, "<target> <amount>"); 
+	register_concmd("amx_takexp", "cmd_take_xp", ADMIN_IMMUNITY, "<target> <amount>");
+
+	RegisterHam(Ham_Spawn, "player", "FwdPlayerSpawn", 1);
+
 }
 
 public hnsxp_spawn(id)
 {
-    MesajColorat(id, "!echipa[Level Mod] !verdeLevel : !echipa  %i , !verdeXP: !echipa  %i ", hnsxp_playerlevel[id], hnsxp_playerxp[id]);
-    if((hnsxp_playerlevel[id] < 50) && (hnsxp_playerxp[id] >= LEVELS[hnsxp_playerlevel[id]]))
-    {
-        MesajColorat(id,"!echipa[%s] !verdeAi trecut levelul", PLUGIN_NAME);
-        while(hnsxp_playerxp[id] >= LEVELS[hnsxp_playerlevel[id]])
-        {
-            hnsxp_playerlevel[id] += 1;
-        }
-    }
-    
-    if(hnsxp_playerlevel[id] > 0)
-        set_user_health(id, get_user_health(id) + 5*hnsxp_playerlevel[id]);
-    if(hnsxp_playerlevel[id] >= 50)
-        set_user_gravity(id, 0.7);
-    
-    
-    
+	MesajColorat(id, "!echipa[Level Mod] !verdeLevel : !echipa  %i , !verdeXP: !echipa  %i ", hnsxp_playerlevel[id], hnsxp_playerxp[id]);
+	if((hnsxp_playerlevel[id] < 50) && (hnsxp_playerxp[id] >= LEVELS[hnsxp_playerlevel[id]]))
+	{
+		MesajColorat(id,"!echipa[%s] !verdeAi trecut levelul", PLUGIN_NAME);
+		while(hnsxp_playerxp[id] >= LEVELS[hnsxp_playerlevel[id]])
+		{
+			hnsxp_playerlevel[id] += 1;
+		}
+	}
+
+	if(hnsxp_playerlevel[id] > 0)
+		set_user_health(id, get_user_health(id) + 5*hnsxp_playerlevel[id]);
+	if(hnsxp_playerlevel[id] >= 50)
+		set_user_gravity(id, 0.7);
+ 		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 7)
+	        cs_set_user_bpammo( id, CSW_DEAGLE, 0 ) 
+
+
+
 }
 
 
 public FwdPlayerSpawn(id)
 {
-    
-    set_task(11.0, "gItem", id);
-    
-}
 
-public twin(id)
-{
+	set_task(10.0, "gItem", id);
+        set_task(10.0, "gItem20", id);
+        set_task(10.0, "gItem30", id);
+        set_task(10.0, "gItem40", id);
 
-new Players[32] 
-new playerCount, i, player 
-get_players(Players, playerCount ,"ae", "TERRORIST")  
-for (i=0; i<playerCount; i++) 
-player = Players[i] 
-hnsxp_playerxp[id] += 200 
+
 }
 
 public plvl(id)
 {
-    
-    MesajColorat(id, "!echipa[Level Mod] !verdeLevel : !echipa  %i , !verdeXP: !echipa  %i ", hnsxp_playerlevel[id], hnsxp_playerxp[id]);
-    
+
+	MesajColorat(id, "!echipa[Level Mod] !verdeLevel : !echipa  %i , !verdeXP: !echipa  %i ", hnsxp_playerlevel[id], hnsxp_playerxp[id]);
+
 }
 public tlvl(id)
 {
-    new poj_Name [ 32 ];
-    get_user_name(id, poj_Name, 31)
-    MesajColorat(0, "!verde[!echipaLevel-Mod!verde] !normal Jucatorul !verde %s !normalare level !verde %i",poj_Name, hnsxp_playerlevel[id]);
-    
+	new poj_Name [ 32 ];
+	get_user_name(id, poj_Name, 31)
+	MesajColorat(0, "!verde[!echipaLevel-Mod!verde] !normal Jucatorul !verde %s !normalare level !verde %i",poj_Name, hnsxp_playerlevel[id]);
+
 }
 public gItem(id)
 {
-    
-    if(hnsxp_playerlevel[id] >= 15)
-        cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 1)
-    cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
-    
-    
-    
-    
-    
-}
 
+	if(hnsxp_playerlevel[id] >= 10 && hnsxp_playerlevel[id] <= 20)
+		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 1)
+	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
+         give_item(id, "weapon_hegrenade");
+
+}
+public gItem20(id)
+{
+
+	if(hnsxp_playerlevel[id] >= 20 && hnsxp_playerlevel[id] <= 30)
+		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 2)
+	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+
+}
+public gItem30(id)
+{
+
+	if(hnsxp_playerlevel[id] >= 30 && hnsxp_playerlevel[id] < 40)
+		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 3)
+	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+
+}
+public gItem40(id)
+{
+
+	if(hnsxp_playerlevel[id] >= 40 && hnsxp_playerlevel[id] <= 50)
+		cs_set_weapon_ammo(give_item(id, "weapon_deagle"), 5)
+	cs_set_user_bpammo( id, CSW_DEAGLE, 0 )  
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_hegrenade");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+         give_item(id, "weapon_flashbang");
+
+}
 public hnsxp_death() 
 {
-    new iVictim = read_data(2);
-    new weapon, hitplace, attacker = get_user_attacker(iVictim,weapon,hitplace);
-    
-    new victimname[32], wvar[32];
-    get_user_name(iVictim,victimname,31);
-    read_data(4, wvar, 31);
-    
-    if(equal(wvar, "world", 5))
-        return;
-    
-    if(attacker < 1 || attacker > 32)
-        return;
-    
-    hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_kill);
-    MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s!", PLUGIN_NAME, get_pcvar_num(hnsxp_grenade), victimname);
-    
-    if(hitplace == HIT_HEAD)
-    {
-        hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_hs);
-        MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s cu headshot!", PLUGIN_NAME, get_pcvar_num(hnsxp_hs), victimname);
-    }
-    
-    if(weapon == CSW_KNIFE)
-    {
-        hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_knife);
-        MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s cu cutitul!", PLUGIN_NAME, get_pcvar_num(hnsxp_knife), victimname);
-    }
-    else if(weapon == CSW_HEGRENADE)
-    {
-        hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_grenade);
-        MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat %s cu HE!", PLUGIN_NAME, get_pcvar_num(hnsxp_grenade), victimname);
-    }
-    
-    hnsxp_hudinfo(attacker);
-}
+	new iVictim = read_data(2);
+	new weapon, hitplace, attacker = get_user_attacker(iVictim,weapon,hitplace);
 
-public hnsxp_hudinfo(id)
-{
-    set_hudmessage(255, 127, 42, 0.44, 0.47, 0, 6.0, 3.0);
-    if(hnsxp_playerlevel[id] < 50)
-        show_hudmessage(id, "Level: %i^nXP: %i ", hnsxp_playerlevel[id], hnsxp_playerxp[id], LEVELS[hnsxp_playerlevel[id] + 1]);
-    else
-        show_hudmessage(id, "Level: %i^nLevel Maxim !", hnsxp_playerlevel[id]);
-    
-    set_task(2.0, "hnsxp_hudinfo", id);
+	new victimname[32], wvar[32];
+	get_user_name(iVictim,victimname,31);
+	read_data(4, wvar, 31);
+
+	if(equal(wvar, "world", 5))
+		return;
+
+	if(attacker < 1 || attacker > 32)
+		return;
+
+	hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_kill);
+	MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s!", PLUGIN_NAME, get_pcvar_num(hnsxp_grenade), victimname);
+
+	if(hitplace == HIT_HEAD)
+	{
+		hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_hs);
+		MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s cu headshot!", PLUGIN_NAME, get_pcvar_num(hnsxp_hs), victimname);
+	}
+
+	if(weapon == CSW_KNIFE)
+	{
+		hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_knife);
+		MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat pe %s cu cutitul!", PLUGIN_NAME, get_pcvar_num(hnsxp_knife), victimname);
+	}
+	else if(weapon == CSW_HEGRENADE)
+	{
+		hnsxp_playerxp[attacker] += get_pcvar_num(hnsxp_grenade);
+		MesajColorat(attacker,"!echipa[%s] !verdeAi primit %i XP pentru ca l-ai omorat %s cu HE!", PLUGIN_NAME, get_pcvar_num(hnsxp_grenade), victimname);
+	}
+
+
 }
 
 public client_putinserver(id)
 {
-    if(get_pcvar_num(hnsxp_savexp) == 1)
-        LoadData(id);
-    
-    set_task(10.0, "hnsxp_hudinfo", id);
+	if(get_pcvar_num(hnsxp_savexp) == 1)
+		LoadData(id);
+
+	set_task(10.0, "hnsxp_hudinfo", id);
 }
 
 public client_disconnect(id)
 {
-    if(get_pcvar_num(hnsxp_savexp) == 1)
-        SaveData(id);
-    
-    hnsxp_playerxp[id] = 0;
-    hnsxp_playerlevel[id] = 0;
+	if(get_pcvar_num(hnsxp_savexp) == 1)
+		SaveData(id);
+
+	hnsxp_playerxp[id] = 0;
+	hnsxp_playerlevel[id] = 0;
 }
 
 public SaveData(id)
 {
-    new PlayerName[35];
-    get_user_name(id,PlayerName,34);
-    
-    new vaultkey[64],vaultdata[256];
-    format(vaultkey,63,"%s",PlayerName);
-    format(vaultdata,255,"%i#%i#",hnsxp_playerxp[id],hnsxp_playerlevel[id]);
-    nvault_set(g_hnsxp_vault,vaultkey,vaultdata);
-    return PLUGIN_CONTINUE;
+	new PlayerName[35];
+	get_user_name(id,PlayerName,34);
+
+	new vaultkey[64],vaultdata[256];
+	format(vaultkey,63,"%s",PlayerName);
+	format(vaultdata,255,"%i#%i#",hnsxp_playerxp[id],hnsxp_playerlevel[id]);
+	nvault_set(g_hnsxp_vault,vaultkey,vaultdata);
+	return PLUGIN_CONTINUE;
 }
 
 public LoadData(id)
 {
-    new PlayerName[35];
-    get_user_name(id,PlayerName,34);
-    
-    new vaultkey[64],vaultdata[256];
-    format(vaultkey,63,"%s",PlayerName);
-    format(vaultdata,255,"%i#%i#",hnsxp_playerxp[id],hnsxp_playerlevel[id]);
-    nvault_get(g_hnsxp_vault,vaultkey,vaultdata,255);
-    
-    replace_all(vaultdata, 255, "#", " ");
-    
-    new playerxp[32], playerlevel[32];
-    
-    parse(vaultdata, playerxp, 31, playerlevel, 31);
-    
-    hnsxp_playerxp[id] = str_to_num(playerxp);
-    hnsxp_playerlevel[id] = str_to_num(playerlevel);
-    
-    return PLUGIN_CONTINUE;
+	new PlayerName[35];
+	get_user_name(id,PlayerName,34);
+
+	new vaultkey[64],vaultdata[256];
+	format(vaultkey,63,"%s",PlayerName);
+	format(vaultdata,255,"%i#%i#",hnsxp_playerxp[id],hnsxp_playerlevel[id]);
+	nvault_get(g_hnsxp_vault,vaultkey,vaultdata,255);
+
+	replace_all(vaultdata, 255, "#", " ");
+
+	new playerxp[32], playerlevel[32];
+
+	parse(vaultdata, playerxp, 31, playerlevel, 31);
+
+	hnsxp_playerxp[id] = str_to_num(playerxp);
+	hnsxp_playerlevel[id] = str_to_num(playerlevel);
+
+	return PLUGIN_CONTINUE;
 }  
 
 
 public cmd_give_level(id, level, cid) 
 { 
-    if(!cmd_access(id, level, cid, 3)) 
-        return PLUGIN_HANDLED
-    
-    new target[32], amount[21], reason[21]
-    
-    read_argv(1, target, 31)
-    read_argv(2, amount, 20)
-    read_argv(3, reason, 20)
-    
-    new player = cmd_target(id, target, 8)
-    
-    if(!player)  
-        return PLUGIN_HANDLED
-    
-    new admin_name[32], player_name[32]
-    get_user_name(id, admin_name, 31)
-    get_user_name(player, player_name, 31)
-    
-    new expnum = str_to_num(amount)
-    MesajColorat(0, "!echipaADMIN %s: !verdeia dat %s level lui %s", admin_name, amount, player_name)
-    
-    hnsxp_playerlevel[player] += expnum
-    SaveData(id)
-    
-    return PLUGIN_CONTINUE
+	if(!cmd_access(id, level, cid, 3)) 
+		return PLUGIN_HANDLED
+
+	new target[32], amount[21], reason[21]
+
+	read_argv(1, target, 31)
+	read_argv(2, amount, 20)
+	read_argv(3, reason, 20)
+
+	new player = cmd_target(id, target, 8)
+
+	if(!player)  
+		return PLUGIN_HANDLED
+
+	new admin_name[32], player_name[32]
+	get_user_name(id, admin_name, 31)
+	get_user_name(player, player_name, 31)
+
+	new expnum = str_to_num(amount)
+	MesajColorat(0, "!echipaADMIN %s: !verdeia dat %s level lui %s", admin_name, amount, player_name)
+
+	hnsxp_playerlevel[player] += expnum
+	SaveData(id)
+
+	return PLUGIN_CONTINUE
 } 
 public cmd_give_xp(id, level, cid) 
 { 
-    if(!cmd_access(id, level, cid, 3)) 
-        return PLUGIN_HANDLED
-    
-    new target[32], amount[21], reason[21]
-    
-    read_argv(1, target, 31)
-    read_argv(2, amount, 20)
-    read_argv(3, reason, 20)
-    
-    new player = cmd_target(id, target, 8)
-    
-    if(!player)  
-        return PLUGIN_HANDLED
-    
-    new admin_name[32], player_name[32]
-    get_user_name(id, admin_name, 31)
-    get_user_name(player, player_name, 31)
-    
-    new expnum = str_to_num(amount)
-    MesajColorat(0, "!echipaADMIN %s: !verdeia dat %s xp lui %s", admin_name, amount, player_name)
-    
-    hnsxp_playerxp[player] += expnum
-    SaveData(id)
-    
-    return PLUGIN_CONTINUE
+	if(!cmd_access(id, level, cid, 3)) 
+		return PLUGIN_HANDLED
+
+	new target[32], amount[21], reason[21]
+
+	read_argv(1, target, 31)
+	read_argv(2, amount, 20)
+	read_argv(3, reason, 20)
+
+	new player = cmd_target(id, target, 8)
+
+	if(!player)  
+		return PLUGIN_HANDLED
+
+	new admin_name[32], player_name[32]
+	get_user_name(id, admin_name, 31)
+	get_user_name(player, player_name, 31)
+
+	new expnum = str_to_num(amount)
+	MesajColorat(0, "!echipaADMIN %s: !verdeia dat %s xp lui %s", admin_name, amount, player_name)
+
+	hnsxp_playerxp[player] += expnum
+	SaveData(id)
+
+	return PLUGIN_CONTINUE
 } 
 
 public cmd_take_level(id, level, cid) 
 { 
-    if(!cmd_access(id, level, cid, 3)) 
-        return PLUGIN_HANDLED
-    
-    new target[32], amount[21], reason[21]
-    
-    read_argv(1, target, 31)
-    read_argv(2, amount, 20)
-    read_argv(3, reason, 20)
-    
-    new player = cmd_target(id, target, 8) 
-    
-    if(!player)  
-        return PLUGIN_HANDLED
-    
-    new admin_name[32], player_name[32]
-    
-    get_user_name(id, admin_name, 31)
-    get_user_name(player, player_name, 31)
-    
-    new expnum = str_to_num(amount)
-    MesajColorat(0, "!echipaADMIN %s: !verdeia luat %s level lui %s", admin_name, amount, player_name)
-    
-    hnsxp_playerlevel[player] -= expnum
-    SaveData(id) 
-    
-    return PLUGIN_CONTINUE
+	if(!cmd_access(id, level, cid, 3)) 
+		return PLUGIN_HANDLED
+
+	new target[32], amount[21], reason[21]
+
+	read_argv(1, target, 31)
+	read_argv(2, amount, 20)
+	read_argv(3, reason, 20)
+
+	new player = cmd_target(id, target, 8) 
+
+	if(!player)  
+		return PLUGIN_HANDLED
+
+	new admin_name[32], player_name[32]
+
+	get_user_name(id, admin_name, 31)
+	get_user_name(player, player_name, 31)
+
+	new expnum = str_to_num(amount)
+	MesajColorat(0, "!echipaADMIN %s: !verdeia luat %s level lui %s", admin_name, amount, player_name)
+
+	hnsxp_playerlevel[player] -= expnum
+	SaveData(id) 
+
+	return PLUGIN_CONTINUE
 }
 public cmd_take_xp(id, level, cid) 
 { 
-    if(!cmd_access(id, level, cid, 3)) 
-        return PLUGIN_HANDLED
-    
-    new target[32], amount[21], reason[21]
-    
-    read_argv(1, target, 31)
-    read_argv(2, amount, 20)
-    read_argv(3, reason, 20)
-    
-    new player = cmd_target(id, target, 8) 
-    
-    if(!player)  
-        return PLUGIN_HANDLED
-    
-    new admin_name[32], player_name[32]
-    
-    get_user_name(id, admin_name, 31)
-    get_user_name(player, player_name, 31)
-    
-    new expnum = str_to_num(amount)
-    MesajColorat(0, "!echipaADMIN %s: !verdeia luat %s level lui %s", admin_name, amount, player_name)
-    
-    hnsxp_playerxp[player] -= expnum
-    SaveData(id) 
-    
-    return PLUGIN_CONTINUE
+	if(!cmd_access(id, level, cid, 3)) 
+		return PLUGIN_HANDLED
+
+	new target[32], amount[21], reason[21]
+
+	read_argv(1, target, 31)
+	read_argv(2, amount, 20)
+	read_argv(3, reason, 20)
+
+	new player = cmd_target(id, target, 8) 
+
+	if(!player)  
+		return PLUGIN_HANDLED
+
+	new admin_name[32], player_name[32]
+
+	get_user_name(id, admin_name, 31)
+	get_user_name(player, player_name, 31)
+
+	new expnum = str_to_num(amount)
+	MesajColorat(0, "!echipaADMIN %s: !verdeia luat %s level lui %s", admin_name, amount, player_name)
+
+	hnsxp_playerxp[player] -= expnum
+	SaveData(id) 
+
+	return PLUGIN_CONTINUE
 }
 
 
 stock MesajColorat(const id, const input[], any:...)
 {
-    new count = 1, players[32]
-    static msg[191]
-    vformat(msg, 190, input, 3)
-    
-    replace_all(msg, 190, "!verde", "^4")
-    replace_all(msg, 190, "!normal", "^1")
-    replace_all(msg, 190, "!echipa", "^3")
-    
-    if (id) players[0] = id; else get_players(players, count, "ch")
+	new count = 1, players[32]
+	static msg[191]
+	vformat(msg, 190, input, 3)
+
+	replace_all(msg, 190, "!verde", "^4")
+	replace_all(msg, 190, "!normal", "^1")
+	replace_all(msg, 190, "!echipa", "^3")
+
+	if (id) players[0] = id; else get_players(players, count, "ch")
 {
-    for (new i = 0; i < count; i++)
-    {
-        if (is_user_connected(players[i]))
-        {
-            message_begin(MSG_ONE_UNRELIABLE, get_user_msgid("SayText"), _, players[i])
-            write_byte(players[i]);
-            write_string(msg);
-            message_end();
-        }
-    }
-  }
+	for (new i = 0; i < count; i++)
+	{
+		if (is_user_connected(players[i]))
+		{
+			message_begin(MSG_ONE_UNRELIABLE, get_user_msgid("SayText"), _, players[i])
+			write_byte(players[i]);
+			write_string(msg);
+			message_end();
+		}
+	}
+}
 }  
+/* AMXX-Studio Notes - DO NOT MODIFY BELOW HERE
+*{ rtf1 ansi ansicpg1250 deff0 deflang1048{ fonttbl{ f0 fnil Tahoma;}}n viewkind4 uc1 pard f0 fs16 n par }
+*/
+/* AMXX-Studio Notes - DO NOT MODIFY BELOW HERE
+*{ rtf1 ansi ansicpg1250 deff0 deflang1048{ fonttbl{ f0 fnil Tahoma;}}n viewkind4 uc1 pard f0 fs16 n par }
+*/
